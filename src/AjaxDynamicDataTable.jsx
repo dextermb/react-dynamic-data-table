@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import DynamicDataTable from "./DynamicDataTable";
+
+import DynamicDataTable from './DynamicDataTable';
 
 class AjaxDynamicDataTable extends Component {
 

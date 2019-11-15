@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import DataRow from "./Components/DataRow";
-import Pagination from "./Components/Pagination";
+import flatten from 'core-js/fn/array/flatten';
 
-import flatten from "core-js/fn/array/flatten";
+import DataRow from './Components/DataRow';
+import Pagination from './Components/Pagination';
 
 class DynamicDataTable extends Component {
     constructor(props) {
