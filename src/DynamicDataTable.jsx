@@ -232,7 +232,7 @@ class DynamicDataTable extends Component {
 
     renderRow(row, index) {
         const {
-            onClick, onMouseUp, onMouseDown, buttons, rowIdentifier, renderCheckboxes, disabledCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions, editableColumns,
+            onClick, onMouseUp, onMouseDown, buttons, rowIdentifier, renderCheckboxes, disableCheckbox, disabledCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions, editableColumns,
         } = this.props;
 
         return rowRenderer({
@@ -242,7 +242,7 @@ class DynamicDataTable extends Component {
             onMouseDown,
             buttons,
             renderCheckboxes,
-            disableCheckbox: disabledCheckboxes.includes(row[rowIdentifier]),
+            disableCheckbox: disableCheckbox(row) || disabledCheckboxes.includes(row[rowIdentifier]),
             key: row[rowIdentifier],
             fields: this.getFields(),
             dataItemManipulator: (field, value, row) => dataItemManipulator(field, value, row),
@@ -566,6 +566,7 @@ DynamicDataTable.propTypes = {
     orderByAscIcon: PropTypes.node,
     orderByDescIcon: PropTypes.node,
     renderCheckboxes: PropTypes.bool,
+    disableCheckbox: PropTypes.func,
     disabledCheckboxes: PropTypes.arrayOf(
         PropTypes.oneOfType([
             PropTypes.number, PropTypes.string
@@ -615,6 +616,7 @@ DynamicDataTable.defaultProps = {
     orderByAscIcon: '↓',
     orderByDescIcon: '↑',
     renderCheckboxes: false,
+    disableCheckbox: () => false,
     disabledCheckboxes: [],
     editableColumns: [],
     actions: [],
