@@ -25,7 +25,7 @@ class DynamicDataTable extends Component {
     static rowRenderer({ row, onClick, buttons, fields, onMouseUp, onMouseDown, renderCheckboxes, disableCheckbox, checkboxIsChecked, onCheckboxChange, dataItemManipulator, dangerouslyRenderFields, actions, editableColumns, index }) {
         return (
             <DataRow
-                key={row.id}
+                key={key}
                 row={row}
                 onClick={onClick}
                 onMouseUp={onMouseUp}
@@ -232,7 +232,7 @@ class DynamicDataTable extends Component {
 
     renderRow(row, index) {
         const {
-            onClick, onMouseUp, onMouseDown, buttons, renderCheckboxes, disabledCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions, editableColumns,
+            onClick, onMouseUp, onMouseDown, buttons, rowIdentifier, renderCheckboxes, disabledCheckboxes, dataItemManipulator, rowRenderer, dangerouslyRenderFields, actions, editableColumns,
         } = this.props;
 
         return rowRenderer({
@@ -242,8 +242,8 @@ class DynamicDataTable extends Component {
             onMouseDown,
             buttons,
             renderCheckboxes,
-            disableCheckbox: disabledCheckboxes.includes(row.id),
-            key: row.id,
+            disableCheckbox: disabledCheckboxes.includes(row[rowIdentifier]),
+            key: row[rowIdentifier],
             fields: this.getFields(),
             dataItemManipulator: (field, value, row) => dataItemManipulator(field, value, row),
             checkboxIsChecked: (value) => this.checkboxIsChecked(value),
@@ -555,6 +555,7 @@ class DynamicDataTable extends Component {
 
 DynamicDataTable.propTypes = {
     rows: PropTypes.array,
+    rowIdentifier: PropTypes.string,
     fieldsToExclude: PropTypes.array,
     fieldMap: PropTypes.object,
     fieldOrder: PropTypes.array,
@@ -603,6 +604,7 @@ DynamicDataTable.propTypes = {
 
 DynamicDataTable.defaultProps = {
     rows: [],
+    rowIdentifier: 'id',
     fieldsToExclude: [],
     fieldMap: {},
     fieldOrder: [],

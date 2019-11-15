@@ -31,7 +31,7 @@ class DataRow extends Component {
     }
 
     renderCheckboxCell() {
-        const { row, renderCheckboxes, disableCheckbox } = this.props;
+        const { row, rowIdentifier, renderCheckboxes, disableCheckbox } = this.props;
 
         if (!renderCheckboxes) {
             return;
@@ -40,7 +40,7 @@ class DataRow extends Component {
         const checkbox = (
             <div className="form-check">
                 <input
-                    name={`bulk-select-${row.id}`}
+                    name={`bulk-select-${row[rowIdentifier]}`}
                     type="checkbox"
                     checked={this.props.checkboxIsChecked(row)}
                     onChange={e => this.props.checkboxChange(e, row)}
@@ -56,13 +56,13 @@ class DataRow extends Component {
     }
 
     renderCell(field, row) {
-        const { editableColumns, index } = this.props;
+        const { rowIdentifier, editableColumns, index } = this.props;
 
         let value = row[field.name];
 
         value = this.props.dataItemManipulator(field.name, value, row);
 
-        const key = `${row.id}_${field.name}`;
+        const key = `${row[rowIdentifier]}_${field.name}`;
 
         let columnIndex = editableColumns.findIndex(column => column.name === field.name);
         if (columnIndex !== -1) {
@@ -208,6 +208,7 @@ class DataRow extends Component {
 }
 
 DataRow.defaultProps = {
+    rowIdentifier: 'id',
     onClick: DataRow.noop,
     onMouseUp: DataRow.noop,
     onMouseDown: DataRow.noop,
@@ -219,6 +220,7 @@ DataRow.defaultProps = {
 
 DataRow.propTypes = {
     row: PropTypes.object,
+    rowIdentifier: PropTypes.string,
     buttons: PropTypes.oneOfType([
         PropTypes.array, PropTypes.func,
     ]),
